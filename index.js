@@ -2,6 +2,8 @@
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
+var _objectWithoutProperties = function (obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; };
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = _interopRequire(require("react"));
@@ -23,6 +25,8 @@ module.exports = React.createClass({
     checked: React.PropTypes.bool,
     defaultChecked: React.PropTypes.bool,
     onChange: React.PropTypes.func,
+    labelOn: React.PropTypes.element,
+    labelOff: React.PropTypes.element,
     name: React.PropTypes.string,
     value: React.PropTypes.string,
     id: React.PropTypes.string,
@@ -78,6 +82,12 @@ module.exports = React.createClass({
       "react-toggle--disabled": this.props.disabled
     });
 
+    var _props = this.props;
+    var labelOn = _props.labelOn;
+    var labelOff = _props.labelOff;
+
+    var rest = _objectWithoutProperties(_props, ["labelOn", "labelOff"]);
+
     return React.createElement(
       "div",
       { className: classes, onClick: this.handleClick },
@@ -87,12 +97,12 @@ module.exports = React.createClass({
         React.createElement(
           "div",
           { className: "react-toggle-track-check" },
-          React.createElement(Check, null)
+          labelOn || React.createElement(Check, null)
         ),
         React.createElement(
           "div",
           { className: "react-toggle-track-x" },
-          React.createElement(X, null)
+          labelOff || React.createElement(X, null)
         )
       ),
       React.createElement("div", { className: "react-toggle-thumb" }),
@@ -102,7 +112,7 @@ module.exports = React.createClass({
         onBlur: this.handleBlur,
         className: "react-toggle-screenreader-only",
         type: "checkbox"
-      }, this.props))
+      }, rest))
     );
   }
 });
